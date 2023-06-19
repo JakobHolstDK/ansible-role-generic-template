@@ -30,7 +30,7 @@ cat <<EOF > playbook.yml
 - hosts: all
   become: true
   roles:
-    - role: ../.
+    - role: ../../.
 
 EOF
 
@@ -45,7 +45,7 @@ create_inventory  > inventory.ini
 run_ansible
 
 # Destroy Vagrant server
-vagrant destroy -f
+#vagrant destroy -f
 
 # Return the result of the Ansible run
 ansible_result=$?
