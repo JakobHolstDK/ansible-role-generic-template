@@ -1,0 +1,26 @@
+---
+role-name: "ansible-role-podmanservice-traefik"
+role-description: "Ansible role for creating a systemd service running podman and a traefik service"
+role-company: "Tusass"
+role-license: "GPLv2"
+role-min-ansible-version: "2.9"
+role-platforms:
+  - name: "RedHat"
+    versions:
+      - "9.2"
+      - "8.4"
+role-galaxy-tags:
+  - "soe"
+  - "services"
+role-dependencies: []
+role-variables: []
+
+test:
+   role-variables:
+      traefik_version: "2.5.3"
+      traefik_config_dir: "/etc/traefik"
+      traefik_config_file: "traefik.yaml"
+      traefik_config_file_path: "{{ traefik_config_dir }}/{{ traefik_config_file }}"
+      traefik_log_dir: "/var/log/traefik"
+      traefik_log_file: "traefik.log"
+      
