@@ -1,5 +1,15 @@
 #!/usr/bin/env bash
 # Function to execute Ansible playbook on Vagrant server
+
+
+create_inventory() {
+    echo "[all]"
+    vagrant ssh-config | awk '/HostName/ {host=$2} /User / {user=$2} /Port/ {port=$2} /IdentityFile/ {key=$2} /^$/ {print host, "ansible_host="host, "ansible_user="user, "ansible_port="port, "ansible_ssh_private_key_file="key "ansible_host_key_checking=false ansible_ssh_host_key_checking=false" }'
+
+}
+
+
+
 run_ansible() {
     ansible-playbook -i inventory.ini playbook.yml
 }
@@ -18,20 +28,18 @@ EOF
 # Create Ansible playbook
 cat <<EOF > playbook.yml
 - hosts: all
-  tasks:
-    - name: Execute Ansible role
-      include_role:
-        name: your_role_name
+  become: true
+  roles:
+    - role: ../.
+
 EOF
 
 # Create Ansible inventory file
-cat <<EOF > inventory.ini
-[all]
-vagrant ansible_host=127.0.0.1 ansible_user=vagrant ansible_ssh_private_key_file=.vagrant/machines/default/virtualbox/private_key
-EOF
 
 # Start Vagrant server
+vagrant destroy --force
 vagrant up
+create_inventory  > inventory.ini
 
 # Execute Ansible playbook on Vagrant server
 run_ansible

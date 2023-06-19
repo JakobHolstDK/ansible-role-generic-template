@@ -1,5 +1,5 @@
 - hosts: all
-  tasks:
-    - name: Execute Ansible role
-      include_role:
-        name: your_role_name
+  become: true
+  roles:
+    - role: ../.
+

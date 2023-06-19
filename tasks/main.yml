@@ -1,5 +1,14 @@
 ---
 # Ansible role for creating a systemd service running podman and a traefik service 
+- name: ansible-role-generic-template | ping
+  ansible_builtin:
+    ping:
+  register: ping_result
+
+- name: ansible-role-generic-template | debug
+  debug:
+    msg: "{{ ping_result }}"
+    
 
 - name: ansible-role-podmanservice-traefik| install prereq for redhat
   include: redhat.yaml
